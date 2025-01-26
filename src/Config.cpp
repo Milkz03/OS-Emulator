@@ -1,15 +1,8 @@
 #include "Config.h"
+#include "ConfigUtils.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
-bool Config::isPowerOfTwo(unsigned int x) {
-    return x && !(x & (x - 1));
-}
-
-bool Config::isInValidRange(unsigned int x) {
-    return x >= 2 && x <= 0xFFFFFFFF;  // [2, 2^32]
-}
 
 Config& Config::getInstance() {
     static Config instance;
@@ -56,7 +49,7 @@ bool Config::loadConfig(const std::string& filename) {
         else if (paramName == "scheduler") {
             std::string schedulerValue;
             iss >> schedulerValue;
-            schedulerType = stripQuotes(schedulerValue);
+            schedulerType = ConfigUtils::stripQuotes(schedulerValue);
             if (schedulerType != "fcfs" && schedulerType != "rr") {
                 std::cerr << "Invalid scheduler type in " << filename << ": must be 'fcfs' or 'rr'" << std::endl;
                 return false;
@@ -99,14 +92,14 @@ bool Config::loadConfig(const std::string& filename) {
         }
         else if (paramName == "max-overall-mem") {
             iss >> maxOverallMem;
-            if (!isInValidRange(maxOverallMem) || !isPowerOfTwo(maxOverallMem)) {
+            if (!ConfigUtils::isInValidRange(maxOverallMem) || !ConfigUtils::isPowerOfTwo(maxOverallMem)) {
                 std::cerr << "Invalid max-overall-mem in " << filename << ": must be power of 2 in range [2, 2^32]" << std::endl;
                 return false;
             }
         }
         else if (paramName == "mem-per-frame") {
             iss >> memPerFrame;
-            if (!isInValidRange(memPerFrame) || !isPowerOfTwo(memPerFrame)) {
+            if (!ConfigUtils::isInValidRange(memPerFrame) || !ConfigUtils::isPowerOfTwo(memPerFrame)) {
                 std::cerr << "Invalid mem-per-frame in " << filename << ": must be power of 2 in range [2, 2^32]" << std::endl;
                 return false;
             }
@@ -117,14 +110,14 @@ bool Config::loadConfig(const std::string& filename) {
         }
         else if (paramName == "min-mem-per-proc") {
             iss >> minMemPerProc;
-            if (!isInValidRange(minMemPerProc) || !isPowerOfTwo(minMemPerProc)) {
+            if (!ConfigUtils::isInValidRange(minMemPerProc) || !ConfigUtils::isPowerOfTwo(minMemPerProc)) {
                 std::cerr << "Invalid min-mem-per-proc in " << filename << ": must be power of 2 in range [2, 2^32]" << std::endl;
                 return false;
             }
         }
         else if (paramName == "max-mem-per-proc") {
             iss >> maxMemPerProc;
-            if (!isInValidRange(maxMemPerProc) || !isPowerOfTwo(maxMemPerProc)) {
+            if (!ConfigUtils::isInValidRange(maxMemPerProc) || !ConfigUtils::isPowerOfTwo(maxMemPerProc)) {
                 std::cerr << "Invalid max-mem-per-proc in " << filename << ": must be power of 2 in range [2, 2^32]" << std::endl;
                 return false;
             }
@@ -141,15 +134,6 @@ bool Config::loadConfig(const std::string& filename) {
 
     configFile.close();
     return true;
-}
-
-std::string Config::stripQuotes(const std::string& str) {
-    if (str.size() >= 2 &&
-        ((str.front() == '"' && str.back() == '"') ||
-            (str.front() == '\'' && str.back() == '\''))) {
-        return str.substr(1, str.size() - 2);
-    }
-    return str;
 }
 
 int Config::getNumCpu() const {

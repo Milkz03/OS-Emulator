@@ -1,6 +1,12 @@
 #pragma once
 
-#include <string>
+#include <map>
+#include <vector>
+#include <thread>
+#include <atomic>
+#include <condition_variable>
+#include "Process.h"
+#include "ConfigUtils.h"
 
 class Config {
 public:
@@ -22,13 +28,6 @@ public:
 
 private:
     Config();
-    Config(const Config&) = delete;
-    Config& operator=(const Config&) = delete;
-
-    std::string stripQuotes(const std::string& str);
-    static bool isPowerOfTwo(unsigned int x);
-    static bool isInValidRange(unsigned int x);
-
     int numCpu;
     std::string schedulerType;
     unsigned int quantumCycles;

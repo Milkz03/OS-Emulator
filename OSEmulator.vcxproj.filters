@@ -57,6 +57,9 @@
     <ClInclude Include="src\MemoryManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConfigUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ConsoleManager.cpp">
@@ -87,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MemoryManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scheduler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConfigUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

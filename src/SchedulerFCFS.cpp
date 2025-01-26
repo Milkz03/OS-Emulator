@@ -38,50 +38,6 @@ void SchedulerFCFS::addProcess(Process* process) {
     }
 }
 
-void SchedulerFCFS::start() {
-    if (running.load()) return;
-    running.store(true);
-    paused.store(false);
-    schedulerThread = std::thread(&SchedulerFCFS::schedulerLoop, this);
-}
-
-void SchedulerFCFS::stop() {
-    if (!running.load()) return;
-    running.store(false);
-    paused.store(false);
-    pauseCV.notify_all();
-    processQueue.stop();
-    if (schedulerThread.joinable()) {
-        schedulerThread.join();
-    }
-
-    for (Worker* worker : workers) {
-        worker->cv.notify_all();
-        if (worker->thread.joinable()) {
-            worker->thread.join();
-        }
-    }
-}
-
-void SchedulerFCFS::pause() {
-    if (!running.load() || paused.load()) return;
-    paused.store(true);
-}
-
-void SchedulerFCFS::resume() {
-    if (!running.load() || !paused.load()) return;
-    paused.store(false);
-    pauseCV.notify_all();
-}
-
-bool SchedulerFCFS::isRunning() const {
-    return running.load();
-}
-
-bool SchedulerFCFS::isPaused() const {
-    return paused.load();
-}
-
 void SchedulerFCFS::schedulerLoop() {
     for (Worker* worker : workers) {
         worker->thread = std::thread(&SchedulerFCFS::workerLoop, this, worker->coreId);

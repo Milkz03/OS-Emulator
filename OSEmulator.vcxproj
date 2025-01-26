@@ -136,6 +136,7 @@
     <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConfigUtils.h" />
     <ClInclude Include="src\Command.h" />
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\Console.h" />
@@ -152,12 +153,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Config.cpp" />
+    <ClCompile Include="src\ConfigUtils.cpp" />
     <ClCompile Include="src\MemoryManager.cpp" />
     <ClCompile Include="src\PrintCommand.cpp" />
     <ClCompile Include="src\ConsoleManager.cpp" />
     <ClCompile Include="src\MainConsole.cpp" />
     <ClCompile Include="src\OSEmulator.cpp" />
     <ClCompile Include="src\Process.cpp" />
+    <ClCompile Include="src\Scheduler.cpp" />
     <ClCompile Include="src\SchedulerFCFS.cpp" />
     <ClCompile Include="src\SchedulerRR.cpp" />
     <ClCompile Include="src\Screen.cpp" />

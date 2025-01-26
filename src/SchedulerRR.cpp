@@ -38,50 +38,6 @@ void SchedulerRR::addProcess(Process* process) {
     }
 }
 
-void SchedulerRR::start() {
-    if (running.load()) return;
-    running.store(true);
-    paused.store(false);
-    schedulerThread = std::thread(&SchedulerRR::schedulerLoop, this);
-}
-
-void SchedulerRR::stop() {
-    if (!running.load()) return;
-    running.store(false);
-    paused.store(false);
-    pauseCV.notify_all();
-    processQueue.stop();
-    if (schedulerThread.joinable()) {
-        schedulerThread.join();
-    }
-
-    for (Worker* worker : workers) {
-        worker->cv.notify_all();
-        if (worker->thread.joinable()) {
-            worker->thread.join();
-        }
-    }
-}
-
-void SchedulerRR::pause() {
-    if (!running.load() || paused.load()) return;
-    paused.store(true);
-}
-
-void SchedulerRR::resume() {
-    if (!running.load() || !paused.load()) return;
-    paused.store(false);
-    pauseCV.notify_all();
-}
-
-bool SchedulerRR::isRunning() const {
-    return running.load();
-}
-
-bool SchedulerRR::isPaused() const {
-    return paused.load();
-}
-
 void SchedulerRR::schedulerLoop() {
     for (Worker* worker : workers) {
         worker->thread = std::thread(&SchedulerRR::workerLoop, this, worker->coreId);

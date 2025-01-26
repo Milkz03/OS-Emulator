@@ -17,13 +17,6 @@ public:
     ~SchedulerFCFS();
 
     void addProcess(Process* process) override;
-    void start() override;
-    void stop() override;
-    void pause() override;
-    void resume() override;
-    bool isRunning() const override;
-    bool isPaused() const override;
-
     int getTotalCores() const override;
     int getBusyCores() const override;
 
@@ -32,7 +25,7 @@ public:
     std::vector<Process*> getFinishedProcesses() const override;
 
 private:
-    void schedulerLoop();
+    void schedulerLoop() override;
     void workerLoop(int coreId);
 
     int numCores;
