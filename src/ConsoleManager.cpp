@@ -4,6 +4,7 @@
 #include "SchedulerFCFS.h"
 #include "SchedulerRR.h"
 #include "PrintCommand.h"
+#include "SchedulerFactory.h"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -40,14 +41,8 @@ bool ConsoleManager::initialize() {
         config.getMemPerFrame()
     );
 
-    if (config.getSchedulerType() == "fcfs") {
-        scheduler = new SchedulerFCFS(config.getNumCpu(), *this);
-    }
-    else if (config.getSchedulerType() == "rr") {
-        scheduler = new SchedulerRR(config.getNumCpu(), config.getQuantumCycles(), *this);
-    }
-    else {
-        std::cerr << "Unknown scheduler type in configuration." << std::endl;
+    scheduler = SchedulerFactory::createScheduler(config, *this);
+    if (!scheduler) {
         return false;
     }
 

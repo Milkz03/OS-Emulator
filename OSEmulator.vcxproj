@@ -146,6 +146,7 @@
     <ClInclude Include="src\PrintCommand.h" />
     <ClInclude Include="src\Process.h" />
     <ClInclude Include="src\Scheduler.h" />
+    <ClInclude Include="src\SchedulerFactory.h" />
     <ClInclude Include="src\SchedulerFCFS.h" />
     <ClInclude Include="src\SchedulerRR.h" />
     <ClInclude Include="src\Screen.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="src\OSEmulator.cpp" />
     <ClCompile Include="src\Process.cpp" />
     <ClCompile Include="src\Scheduler.cpp" />
+    <ClCompile Include="src\SchedulerFactory.cpp" />
     <ClCompile Include="src\SchedulerFCFS.cpp" />
     <ClCompile Include="src\SchedulerRR.cpp" />
     <ClCompile Include="src\Screen.cpp" />
