@@ -83,13 +83,13 @@
     <ClCompile Include="src\PrintCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SchedulerFCFS.cpp">
+    <ClCompile Include="src\SchedulerFirstComeFirstServe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SchedulerRR.cpp">
+    <ClCompile Include="src\SchedulerRoundRobin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MemoryManager.cpp">

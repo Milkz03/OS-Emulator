@@ -1,11 +1,11 @@
 #pragma once
-#include "Scheduler.h"
-#include "SchedulerFCFS.h"
-#include "SchedulerRR.h"
 #include "Config.h"
+#include "Scheduler.h"
+#include "SchedulerFirstComeFirstServe.h"
+#include "SchedulerRoundRobin.h"
 
 class SchedulerFactory {
 public:
-    static Scheduler* createScheduler(const Config& config, ConsoleManager& consoleManager);
+	static Scheduler* createScheduler(const Config& config, ConsoleManager& consoleManager);
 };
 
